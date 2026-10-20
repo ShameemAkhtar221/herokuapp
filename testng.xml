@@ -1,0 +1,33 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="Selenium Tests" thread-count="1">
+
+    <test name="Smoke">
+        <groups>
+            <run>
+                <include name="Smoke"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="tests.LoginTest"/>
+            <class name="tests.AlertsTest"/>
+        </classes>
+    </test>
+
+    <test name="Regression">
+        <groups>
+            <run>
+                <include name="Smoke"/>
+                <include name="Regression"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="tests.LoginTest"/>
+            <class name="tests.AlertsTest"/>
+            <class name="tests.DropDownTest"/>
+            <class name="tests.CheckBoxTest"/>
+            <class name="tests.DynamicLoadingTest"/>
+        </classes>
+    </test>
+</suite>
+
+
