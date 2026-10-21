@@ -1,11 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        // Jenkins itself runs on Java 21 (JRE only); build with the full JDK 17 the project targets
-        JAVA_HOME = '/usr/lib/jvm/java-17-openjdk-amd64'
-    }
-
     parameters {
         choice(name: 'BROWSER', choices: ['chrome', 'firefox'], description: 'Browser to run tests on')
         choice(name: 'SUITE', choices: ['testng.xml', 'Smoke', 'Regression'], description: 'Full testng.xml suite, or one TestNG group')

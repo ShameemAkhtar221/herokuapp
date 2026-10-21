@@ -14,7 +14,7 @@ The test framework is TestNG (`org.testng.annotations.Test`); don't use JUnit. `
 
 ## Build and test
 
-The environment has Maven 3.6.3 and OpenJDK 17. There is no Maven wrapper (`.mvn/` is empty).
+The environment has Maven 3.6.3 and OpenJDK 21. There is no Maven wrapper (`.mvn/` is empty).
 
 ```bash
 mvn compile                              # compile
@@ -26,8 +26,8 @@ mvn test -Dtest=LoginTest                # run one test class
 mvn test -Dtest=LoginTest#logout         # run one test method
 ```
 
-`pom.xml` sets `maven.compiler.release` to 17 and pins `maven-compiler-plugin` 3.13.0 and `maven-surefire-plugin` 3.2.5. Keep those pins: Maven 3.6.3's default compiler plugin (3.1) ignores `release` and targets Java 5, which JDK 17 rejects, and its default Surefire (2.12.4) is too old for TestNG 7. Surefire auto-detects TestNG; `testng.xml` is used only by the `cross-browser` profile. It runs each `<test>` block in parallel, which is safe because TestNG creates separate test-class instances for each `<test>`, so the `driver` field isn't shared between threads.
+`pom.xml` sets `maven.compiler.release` to 21 and pins `maven-compiler-plugin` 3.13.0 and `maven-surefire-plugin` 3.2.5. Keep those pins: Maven 3.6.3's default compiler plugin (3.1) ignores `release` and targets Java 5, which JDK 21 rejects, and its default Surefire (2.12.4) is too old for TestNG 7. Surefire auto-detects TestNG; `testng.xml` is used only by the `cross-browser` profile. It runs each `<test>` block in parallel, which is safe because TestNG creates separate test-class instances for each `<test>`, so the `driver` field isn't shared between threads.
 
 ## CI
 
-`Jenkinsfile` defines a Jenkins declarative pipeline (job type "Pipeline script from SCM", branch `main`). It polls GitHub every ~5 minutes and can also be run manually with parameters `BROWSER` (`chrome`/`firefox`) and `SUITE` (`testng.xml` runs `-Pcross-browser`; `Smoke`/`Regression` run `-Dgroups=<group>`). Tests always run with `-Dheadless=true`, since the Jenkins agent has no display. The agent needs JDK 17, Maven and the browsers installed. The local Jenkins service runs on a Java 21 JRE (Jenkins requires 21+), which can't compile with `--release 17`, so the Jenkinsfile sets `JAVA_HOME` to `/usr/lib/jvm/java-17-openjdk-amd64` for the build. Surefire XML is published with `junit` (failed tests make the build UNSTABLE), and failure screenshots are archived as artifacts.
+`Jenkinsfile` defines a Jenkins declarative pipeline (job type "Pipeline script from SCM", branch `main`). It polls GitHub every ~5 minutes and can also be run manually with parameters `BROWSER` (`chrome`/`firefox`) and `SUITE` (`testng.xml` runs `-Pcross-browser`; `Smoke`/`Regression` run `-Dgroups=<group>`). Tests always run with `-Dheadless=true`, since the Jenkins agent has no display. The agent needs JDK 21 (a full JDK, not just the JRE), Maven and the browsers installed. Jenkins and the build both use JDK 21 (`/usr/lib/jvm/java-21-openjdk-amd64`, set as `JAVA_HOME` in the Jenkins systemd override). Surefire XML is published with `junit` (failed tests make the build UNSTABLE), and failure screenshots are archived as artifacts.
