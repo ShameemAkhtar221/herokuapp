@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -14,10 +15,12 @@ public class CheckBoxPage extends BasePage {
         super(driver);
     }
 
+    @Step("Open checkboxes page")
     public void open(){
         driver.get(ConfigReader.getProperty("baseUrl") + "/checkboxes");
     }
 
+    @Step("Select first checkbox")
     public void clickCheckBox() {
         if(!checkBoxField.isSelected()){
             checkBoxField.click();

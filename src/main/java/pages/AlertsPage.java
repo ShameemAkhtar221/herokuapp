@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.Alert;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -29,6 +30,7 @@ public class AlertsPage extends BasePage {
         super(driver);
     }
 
+    @Step("Open JavaScript alerts page")
     public void open() {
         driver.get(ConfigReader.getProperty("baseUrl") + "/javascript_alerts");
     }
@@ -44,12 +46,14 @@ public class AlertsPage extends BasePage {
         }
     }
 
+    @Step("Accept JS alert")
     public void acceptJsAlert() {
         jsAlertButton.click();
         Alert alert = wait.until(ExpectedConditions.alertIsPresent());
         alert.accept();
     }
 
+    @Step("Accept JS confirm")
     public void acceptJsConfirm() {
         jsConfirmButton.click();
         Alert alert = wait.until(ExpectedConditions.alertIsPresent());
@@ -57,6 +61,7 @@ public class AlertsPage extends BasePage {
 
     }
 
+    @Step("Enter \"{text}\" in JS prompt")
     public void jsPromptAlert(String text) {
         jsPromptButton.click();
         Alert alert = wait.until(ExpectedConditions.alertIsPresent());

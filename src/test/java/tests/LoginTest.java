@@ -1,5 +1,10 @@
 package tests;
 
+import io.qameta.allure.Description;
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Severity;
+import io.qameta.allure.SeverityLevel;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -8,6 +13,8 @@ import pages.SecureAreaPage;
 import utils.ConfigReader;
 
 
+@Epic("the-internet")
+@Feature("Login")
 public class LoginTest extends BaseTest {
 
     private String username;
@@ -28,6 +35,8 @@ public class LoginTest extends BaseTest {
 
     }
 
+    @Severity(SeverityLevel.BLOCKER)
+    @Description("Valid credentials log the user into the secure area")
     @Test(groups = {"Smoke", "Regression"}, testName = "Login test")
     public void login() {
         loginPage.login(username, password);
@@ -39,6 +48,8 @@ public class LoginTest extends BaseTest {
                 "Unexpected flash message: " + message);
     }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("A wrong password shows an error and stays on the login page")
     @Test(groups = {"Smoke", "Regression"}, testName = "Invalid login")
     public void invalidLogin() {
         loginPage.login(username, wrongPassword);
@@ -49,6 +60,8 @@ public class LoginTest extends BaseTest {
         Assert.assertTrue(loginPage.isLoaded(), "User should stay on the login page");
     }
 
+    @Severity(SeverityLevel.CRITICAL)
+    @Description("Logging out returns the user to the login page")
     @Test(groups = {"Smoke", "Regression"}, testName = "Logout test")
     public void logout() {
         loginPage.login(username, password);

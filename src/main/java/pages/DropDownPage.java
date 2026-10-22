@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -16,6 +17,7 @@ public class DropDownPage extends BasePage {
         super(driver);
     }
 
+    @Step("Open dropdown page")
     public void open() {
         driver.get(ConfigReader.getProperty("baseUrl") + "/dropdown");
     }
@@ -31,6 +33,7 @@ public class DropDownPage extends BasePage {
         }
     }
 
+    @Step("Select \"{text}\" from dropdown")
     public void selectByVisibleText(String text) {
         waitForElementToBeClickable(dropdown);
         new Select(dropdown).selectByVisibleText(text);

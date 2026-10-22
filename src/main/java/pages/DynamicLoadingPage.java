@@ -1,5 +1,6 @@
 package pages;
 
+import io.qameta.allure.Step;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -19,6 +20,7 @@ public class DynamicLoadingPage extends BasePage {
     private WebElement helloWorld;
 
 
+    @Step("Open dynamic loading page")
     public void open(){
         driver.get(ConfigReader.getProperty("baseUrl") + "/dynamic_loading/1");
     }
@@ -34,6 +36,7 @@ public class DynamicLoadingPage extends BasePage {
         }
     }
 
+    @Step("Click Start")
     public void clickStartButton(){
         startButton.click();
     }

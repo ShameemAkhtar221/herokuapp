@@ -1,5 +1,7 @@
 package pages;
 
+import io.qameta.allure.Allure;
+import io.qameta.allure.Step;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -29,6 +31,7 @@ public class LoginPage extends BasePage {
         super(driver);
     }
 
+    @Step("Open login page")
     public void open(){
         driver.get(ConfigReader.getProperty("baseUrl") + "/login");
     }
@@ -45,10 +48,13 @@ public class LoginPage extends BasePage {
         click(loginButton);
     }
 
+    // Allure.step instead of @Step, so the password isn't recorded as a step parameter.
     public void login(String username, String password) {
-        enterUsername(username);
-        enterPassword(password);
-        clickLoginButton();
+        Allure.step("Log in as " + username, () -> {
+            enterUsername(username);
+            enterPassword(password);
+            clickLoginButton();
+        });
     }
 
     public boolean isLoaded() {

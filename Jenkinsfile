@@ -35,6 +35,8 @@ pipeline {
         always {
             junit allowEmptyResults: true, testResults: 'target/surefire-reports/*.xml'
             archiveArtifacts artifacts: 'target/screenshots/*.png', allowEmptyArchive: true
+            // Needs the Allure Jenkins plugin and an Allure Commandline tool named 'allure' (Manage Jenkins -> Tools)
+            allure includeProperties: false, commandline: 'allure', results: [[path: 'target/allure-results']]
         }
     }
 }
