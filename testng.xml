@@ -5,11 +5,22 @@
         <groups>
             <run>
                 <include name="Smoke"/>
-            </run>
+                </run>
         </groups>
         <classes>
             <class name="tests.LoginTest"/>
             <class name="tests.AlertsTest"/>
+        </classes>
+    </test>
+
+    <test name="Visual Test">
+        <groups>
+            <run>
+                <include name="Visual"/>
+            </run>
+        </groups>
+        <classes>
+            <class name="tests.VisualTest"/>
         </classes>
     </test>
 
