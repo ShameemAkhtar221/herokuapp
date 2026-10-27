@@ -3,7 +3,7 @@ pipeline {
 
     parameters {
         choice(name: 'BROWSER', choices: ['chrome', 'firefox'], description: 'Browser to run tests on')
-        choice(name: 'SUITE', choices: ['testng.xml', 'Smoke', 'Regression'], description: 'Full testng.xml suite, or one TestNG group')
+        choice(name: 'SUITE', choices: ['testng.xml', 'Smoke', 'Regression', 'Visual'], description: 'Full testng.xml suite, or one TestNG group')
     }
 
     triggers {
@@ -35,6 +35,7 @@ pipeline {
         always {
             junit allowEmptyResults: true, testResults: 'target/surefire-reports/*.xml'
             archiveArtifacts artifacts: 'target/screenshots/*.png', allowEmptyArchive: true
+            archiveArtifacts artifacts: 'target/visual/**/*.png', allowEmptyArchive: true   // actual + diff of failed visual tests
             // Needs the Allure Jenkins plugin and an Allure Commandline tool named 'allure' (Manage Jenkins -> Tools)
             allure includeProperties: false, commandline: 'allure', results: [[path: 'target/allure-results']]
         }
